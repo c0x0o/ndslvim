@@ -153,3 +153,6 @@ Web开发中非常著名的编码辅助工具，其使用方式可以参见[emme
 1. rainbow\_parenthese：彩色括号
 2. vim-colors-solarized：全局样式，solarized
 
+## 致谢
+
+感谢[k-vim](https://github.com/wklken/k-vim)带给我的启发，还有[VimAwesome](http://vimawesome.com)这个超棒插件站。
