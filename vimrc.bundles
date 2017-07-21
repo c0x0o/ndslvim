@@ -1,0 +1,135 @@
+" NOTE: use vim-plug to manage plugins
+
+set nocompatible
+filetype off " required! turn off
+
+call plug#begin('~/.vim/bundle')
+" ====================== plugin definition ==========================
+
+" airline
+" a light weight status bar
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" ctrlP
+" a great fuzzy buffer finder, toggle with '<leader>f'
+Plug 'kien/ctrlp.vim'
+
+" TheNerdTree
+" a filesystem tree viewer, toggle with '<C-n>'
+Plug 'scrooloose/nerdtree'
+
+" YouCompleteMe
+" a code completer, use '<tab>' to select
+Plug 'Valloric/YouCompleteMe'
+
+" emmet
+" famous emmet! use '<C-e>' to expand
+Plug 'mattn/emmet-vim'
+
+" nerdcommenter
+" auto comment, '[count]<leader>c<space>' to toggle
+Plug 'scrooloose/nerdcommenter'
+
+" vim-trailing-whitespace
+" mark spare white space and use '<leader><space>' to fix it (globally).
+Plug 'bronson/vim-trailing-whitespace'
+
+" delimitmate
+" complete pair symbol such as (), {} etc
+Plug 'raimondi/delimitmate'
+
+" theme
+Plug 'kien/rainbow_parentheses.vim'         " for parentheses
+Plug 'altercation/vim-colors-solarized'
+
+
+" ==================== plugin definition end ========================
+call plug#end()
+
+" ==================== configuration ================================
+" hints:
+" 1. use /pluginName to search its config
+
+" airline {{{
+    if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+    endif
+    let g:airline_left_sep = '▶'
+    let g:airline_left_alt_sep = '❯'
+    let g:airline_right_sep = '◀'
+    let g:airline_right_alt_sep = '❮'
+    let g:airline_symbols.linenr = '¶'
+    let g:airline_symbols.branch = '⎇'
+
+    " enable buffer list
+    " let g:airline#extensions#tabline#enabled = 1
+    " let g:airline#extensions#tabline#fnamemod = ':t'
+" }}}
+
+" ctrlP {{{
+    " Setup some default ignores
+    let g:ctrlp_custom_ignore = {
+                \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+                \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg|tar|tar.gz|tar.bz2|pyc|o)$',
+                \}
+    " use nearest folder which has a version control info(.svn, .git) as the
+    " root, or the current directory
+    let g:ctrlp_working_path_mode = 'ra'
+
+    " activate ctrlP
+    let g:ctrlp_map = '<leader>f'
+    let g:ctrlp_cmd = 'CtrlP'
+
+    " key map
+    nmap <leader>bb :CtrlPBuffer<cr>
+    nmap <leader>bm :CtrlPMixed<cr>
+    nmap <leader>bs :CtrlPMRU<cr>
+
+" }}}
+
+" TheNerdTree {{{
+    map <C-n> :NERDTreeToggle<CR>
+    let NERDTreeHighlightCursorline=1
+    let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+    "close vim if the only window left open is a NERDTree
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+    " s/v split open
+    let g:NERDTreeMapOpenSplit = 's'
+    let g:NERDTreeMapOpenVSplit = 'v'
+" }}}
+
+" YouCompleteMe {{{
+    let g:ycm_complete_in_comments = 1          " use completer in comment
+    let g:ycm_seed_identifiers_with_syntax=1    " complete language key words
+    let g:ycm_goto_buffer_command = 'new-tab'   " open a new tab when using Goto command
+    let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+" }}}
+
+" emmet {{{
+    let g:user_emmet_expandabbr_key = '<C-e>'
+"   let g:user_emmet_leader_key='<C-e>'
+" }}}
+
+" nerdcommenter {{{
+    let g:NERDSpaceDelims=1
+    let g:NERDAltDelims_python = 1
+" }}}
+
+" trailingwhitespace {{{
+    nnoremap <leader><space> :FixWhitespace<cr>
+" }}}
+
+
+" delimitmate {{{
+" }}}
+
+" solarized {{{
+    let g:solarized_termtrans=1
+    let g:solarized_contrast="normal"
+    let g:solarized_visibility="normal"
+    " let g:solarized_termcolors=256
+" }}}
+
+" ==================== configuration end ============================
+
