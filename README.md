@@ -99,6 +99,8 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --tern-c
 |`{n},c<space>`|（反）注释n行（n可选），或选中区域|
 |`,<space>`|清除文件中多余的空格|
 |`<Ctrl-j>`|触发语义补全菜单,在补全函数的时候非常有用|
+|`,n`|前往文件中下一个被修改过的地方（基于git diff）|
+|`,N`|前往文件中上一个被修改过的地方（基于GIT DIFF）|
 
 ## 插件说明
 
@@ -153,6 +155,26 @@ Web开发中非常著名的编码辅助工具，其使用方式可以参见[emme
 
 1. rainbow\_parenthese：彩色括号
 2. vim-colors-solarized：全局样式，solarized
+
+### git-tools
+
+#### vim-gitgutter
+
+用于显示文件的修改状态的插件
+
+#### vim-fugitive
+
+Vim的git-wrapper插件，可以在Vim中轻松地执行各种git命令。
+
+1. 使用`:Gstatus`来执行`git status`，并且你可以在对应行上按`p`或`-`来分别执行`git add`或`git reset`
+2. 然后使用`:Gcommit`来执行`git commit`
+3. 使用`:Gmove`来执行`git mv`
+4. 使用`:Gdelete`来执行`git rm`
+5. 使用`:Ggrep`来执行`git grep`
+6. 使用`:Gdiff`来执行`git diff`，个人感觉不好用，有gitgutter就够用了
+7. 使用`:Gread`来执行`git checkout --filename`
+
+使用`:help fugitive`来获取更多帮助
 
 ## 致谢
 
