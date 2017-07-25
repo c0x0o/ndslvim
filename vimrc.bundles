@@ -100,10 +100,12 @@ call plug#end()
 " }}}
 
 " YouCompleteMe {{{
-    let g:ycm_complete_in_comments = 1          " use completer in comment
-    let g:ycm_seed_identifiers_with_syntax=1    " complete language key words
-    let g:ycm_goto_buffer_command = 'new-tab'   " open a new tab when using Goto command
-    let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+    let g:ycm_complete_in_comments = 1                              " use completer in comment
+    let g:ycm_seed_identifiers_with_syntax=1                        " complete language key words
+    let g:ycm_goto_buffer_command = 'new-tab'                       " open a new tab when using Goto command
+    let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'   " set default ycm completer config
+    let g:ycm_key_invoke_completion = '<C-j>'                       " remap the default completer trigger
+
 " }}}
 
 " emmet {{{

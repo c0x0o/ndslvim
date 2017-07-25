@@ -98,6 +98,7 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --tern-c
 |`ctrl-e`|emmet代码扩展|
 |`{n},c<space>`|（反）注释n行（n可选），或选中区域|
 |`,<space>`|清除文件中多余的空格|
+|`<Ctrl-j>`|触发语义补全菜单,在补全函数的时候非常有用|
 
 ## 插件说明
 
