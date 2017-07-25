@@ -143,8 +143,6 @@ endif
 
 " theme
 set background=dark
-colorscheme solarized 
-let g:airline_theme='luna'
 
 " set mark column color
 hi! link SignColumn   LineNr

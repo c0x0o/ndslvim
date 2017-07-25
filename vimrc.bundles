@@ -13,7 +13,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 " ctrlP
 " a great fuzzy buffer finder, toggle with '<leader>f'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 " TheNerdTree
 " a filesystem tree viewer, toggle with '<C-n>'
@@ -54,17 +54,34 @@ call plug#end()
 " airline {{{
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}
-    endif
-    let g:airline_left_sep = '▶'
-    let g:airline_left_alt_sep = '❯'
-    let g:airline_right_sep = '◀'
-    let g:airline_right_alt_sep = '❮'
-    let g:airline_symbols.linenr = '¶'
-    let g:airline_symbols.branch = '⎇'
+   endif
 
-    " enable buffer list
-    " let g:airline#extensions#tabline#enabled = 1
-    " let g:airline#extensions#tabline#fnamemod = ':t'
+    let g:airline_theme='luna'
+
+    " unicode symbols
+    let g:airline_left_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_symbols.crypt = '🔒'
+    let g:airline_symbols.linenr = '☰'
+    let g:airline_symbols.linenr = '␊'
+    let g:airline_symbols.linenr = '␤'
+    let g:airline_symbols.linenr = '¶'
+    let g:airline_symbols.maxlinenr = ''
+    let g:airline_symbols.maxlinenr = '㏑'
+    let g:airline_symbols.branch = '⎇'
+    let g:airline_symbols.paste = 'ρ'
+    let g:airline_symbols.paste = 'Þ'
+    let g:airline_symbols.paste = '∥'
+    let g:airline_symbols.spell = 'Ꞩ'
+    let g:airline_symbols.notexists = '∄'
+    let g:airline_symbols.whitespace = 'Ξ'
+
+    " co-op with YouCompleteMe
+    let g:airline#extensions#ycm#enabled = 1
+    " set error count prefix >
+    let g:airline#extensions#ycm#error_symbol = 'E:'
+    " set warning count prefix >
+    let g:airline#extensions#ycm#warning_symbol = 'W:'
 " }}}
 
 " ctrlP {{{
@@ -76,6 +93,7 @@ call plug#end()
     " use nearest folder which has a version control info(.svn, .git) as the
     " root, or the current directory
     let g:ctrlp_working_path_mode = 'ra'
+    let g:ctrlp_root_markers = ['Makefile', 'makefile']
 
     " activate ctrlP
     let g:ctrlp_map = '<leader>f'
@@ -130,7 +148,7 @@ call plug#end()
     let g:solarized_termtrans=1
     let g:solarized_contrast="normal"
     let g:solarized_visibility="normal"
-    " let g:solarized_termcolors=256
+    colorscheme solarized
 " }}}
 
 " ==================== configuration end ============================
