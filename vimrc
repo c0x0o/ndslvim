@@ -34,6 +34,7 @@ set shortmess=atI
 set magic                       " For regular expressions turn magic on
 set title                       " change the terminal's title
 set nobackup                    " do not keep a backup file
+set noswapfile                  " do not generate swap files
 
 set novisualbell                " turn off visual bell
 set noerrorbells                " don't beep
