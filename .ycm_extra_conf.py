@@ -14,10 +14,14 @@ BASE_FLAGS = [
         '-fexceptions',
         '-ferror-limit=10000',
         '-DNDEBUG',
-        '-std=c11',
+        '-std=POSIX.1-2008',
         '-xc',
         '-isystem',
-        '/usr/include/'
+        '/usr/include/',
+        '-isystem',
+        '/usr/lib/',
+        '-I',
+        '.'
         ]
 
 SOURCE_EXTENSIONS = [
@@ -130,7 +134,7 @@ def FlagsForClangComplete(root):
 def FlagsForInclude(root):
     try:
         include_path = FindNearest(root, 'include')
-        flags = []
+        flags = ["-I"+include_path]
         for dirroot, dirnames, filenames in os.walk(include_path):
             for dir_path in dirnames:
                 real_path = os.path.join(dirroot, dir_path)
