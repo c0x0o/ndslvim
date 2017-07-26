@@ -107,6 +107,8 @@ call plug#end()
                 \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
                 \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg|tar|tar.gz|tar.bz2|pyc|o)$',
                 \}
+    let g:ctrlp_show_hidden = 1
+
     " use nearest folder which has a version control info(.svn, .git) as the
     " root, or the current directory
     let g:ctrlp_working_path_mode = 'ra'
