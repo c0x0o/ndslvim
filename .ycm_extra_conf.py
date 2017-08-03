@@ -46,7 +46,8 @@ HEADER_EXTENSIONS = [
         ]
 
 HEADER_DIRECTORIES = [
-        'include'
+        'include',
+        'src'
         ]
 
 BUILD_DIRECTORY = 'build';
@@ -84,7 +85,7 @@ def FindNearest(path, target, build_folder=None):
 
     parent = os.path.dirname(os.path.abspath(path));
     if(parent == path):
-        raise RuntimeError("Could not find " + target);
+        return None
 
     if(build_folder):
         candidate = os.path.join(parent, build_folder, target)
@@ -133,12 +134,17 @@ def FlagsForClangComplete(root):
 
 def FlagsForInclude(root):
     try:
-        include_path = FindNearest(root, 'include')
-        flags = ["-I"+include_path]
-        for dirroot, dirnames, filenames in os.walk(include_path):
-            for dir_path in dirnames:
-                real_path = os.path.join(dirroot, dir_path)
-                flags = flags + ["-I" + real_path]
+        flags = []
+        for header_dir in HEADER_DIRECTORIES:
+            include_path = FindNearest(root, header_dir)
+            if include_path == None:
+                continue;
+
+            flags = flags + ["-I"+include_path]
+            for dirroot, dirnames, filenames in os.walk(include_path):
+                for dir_path in dirnames:
+                    real_path = os.path.join(dirroot, dir_path)
+                    flags = flags + ["-I" + real_path]
         return flags
     except:
         return None
