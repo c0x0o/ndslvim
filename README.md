@@ -33,6 +33,14 @@ sudo apt install python python3 python-dev python3-dev
 
 对于Ubuntu14.04的用户，你或许还需要检查一下python3的版本是否高于3.3。
 
+接下来，由于编译YouCompleteMe插件需要你的C++编译器完整的支持c++11特性，如果你使用GNU gcc作为你的编译工具请确保它的版本在4.9及以上。
+
+```shell
+g++ --version
+```
+
+如果你是ubuntu14.04的用户，升级gcc的步骤可以参考[这篇文章](http://www.linuxidc.com/Linux/2016-02/128327.htm)
+
 ### Vim
 
 由于插件的限制，需要对vim本身的版本进行一下检查。如果你不打算使用插件，而是仅仅使用Vim的基础配置，可以跳过这步。
@@ -50,7 +58,7 @@ vim --version | grep "python"
 
 如果你的Vim没有满足第一个要求，你将不能使用代码补全和语法检查功能。如果你没有满足第二个要求，那么悲剧了，你需要重新自行编译Vim或者下载满足要求的Vim。
 
-Tips: ubuntu14.04默认的Vim不满足版本要求，但是可以使用其它功能，不过我推荐自己通过deb包去安装符合要求的Vim^0^
+Tips: ubuntu14.04默认的Vim不满足版本要求，但是可以使用除代码检查和补全之外的其它功能。想要升级的用户，可以参考[这篇文章](http://blog.csdn.net/gatieme/article/details/52752070)
 
 
 ## 安装
@@ -73,8 +81,10 @@ ln -s ${repo_path}/vimrc.bundles ~/.vimrc.bundles
 如果你顺利的完成了插件的下载，还有最后一项工作，编译YouCompleteMe：
 
 ```shell
-cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --tern-completer && cd -
+cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --tern-completer --system-libclang && cd -
 ```
+
+注意，在执行`install.py`时，如果你的Vim之前显示的是`+ Python`（即拥有python2支持），请使用pyhton2执行该文件，否则请使用python3.3以上的版本执行。
 
 ## 快捷键
 
@@ -154,7 +164,8 @@ Web开发中非常著名的编码辅助工具，其使用方式可以参见[emme
 ### 样式性插件
 
 1. rainbow\_parenthese：彩色括号
-2. vim-colors-solarized：全局样式，solarized
+2. vim-colors-solarized：全局样式，solarized，默认
+3. molokai：全局样式
 
 ### git-tools
 
