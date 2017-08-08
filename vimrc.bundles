@@ -42,6 +42,7 @@ Plug 'raimondi/delimitmate'
 " theme
 Plug 'kien/rainbow_parentheses.vim'         " for parentheses
 Plug 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
 
 " git tools
 "
@@ -190,11 +191,15 @@ call plug#end()
     au Syntax * RainbowParenthesesLoadBraces
 " }}}
 
+" molokai {{{
+    let g:molokai_original = 1
+    let g:rehash256 = 1
+" }}}
+
 " solarized {{{
     let g:solarized_termtrans=1
     let g:solarized_contrast="normal"
     let g:solarized_visibility="normal"
-    colorscheme solarized
 " }}}
 
 " vim-gitgutter {{{
