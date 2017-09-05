@@ -102,8 +102,10 @@ def getIncludeFlags(root, filename):
 
     # collection third party include info
     for dirname in os.listdir(root):
-        if (os.path.isdir(dirname)):
-            include_flags = include_flags + getModuleIncludeFlags(os.path.join(root, dirname))
+        module_root = os.path.join(root, dirname)
+
+        if (os.path.isdir(module_root)):
+            include_flags = include_flags + getModuleIncludeFlags(module_root)
 
     return include_flags;
 
@@ -119,7 +121,7 @@ def getLanguageFlags(filename):
 def FlagsForFile(filename):
     root = os.path.dirname(os.path.realpath(filename));
 
-    include_flags = getIncludeFlags(root, filename);
+    include_flags = getIncludeFlags(root, os.path.basename(filename));
     language_flags = getLanguageFlags(filename);
 
     final_flags = BASE_FLAGS;
@@ -128,6 +130,5 @@ def FlagsForFile(filename):
     if include_flags:
         final_flags = final_flags + include_flags
     return {
-            'flags': final_flags,
-            'do_cache': True
+            'flags': final_flags
             }
