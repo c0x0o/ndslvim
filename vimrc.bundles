@@ -39,6 +39,10 @@ Plug 'bronson/vim-trailing-whitespace'
 " complete pair symbol such as (), {} etc
 Plug 'raimondi/delimitmate'
 
+" matchit
+" extending % matching in HTML, Latex and other language
+Plug 'vim-scripts/matchit.zip'
+
 " theme
 Plug 'kien/rainbow_parentheses.vim'         " for parentheses
 Plug 'altercation/vim-colors-solarized'
@@ -162,6 +166,9 @@ call plug#end()
 
 
 " delimitmate {{{
+" }}}
+
+" matchit {{{
 " }}}
 
 " rainbow_parentheses {{{
