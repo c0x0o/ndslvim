@@ -71,6 +71,8 @@ call plug#end()
    endif
 
     let g:airline_theme='luna'
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#show_buffers = 0
 
     " unicode symbols
     let g:airline_left_sep = ''
@@ -109,7 +111,7 @@ call plug#end()
 " ctrlP {{{
     " Setup some default ignores
     let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+                \ 'dir':  '\v[\/]((\.(git|hg|svn)|\_site)|node_modules|bower_modules)$',
                 \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg|tar|tar.gz|tar.bz2|pyc|o)$',
                 \}
     let g:ctrlp_show_hidden = 1
