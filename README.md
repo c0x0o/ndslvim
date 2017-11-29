@@ -72,6 +72,7 @@ Tips: ubuntu14.04默认的Vim不满足版本要求，但是可以使用除代码
 ln -s ${repo_path} ~/.vim
 ln -s ${repo_path}/vimrc ~/.vimrc
 ln -s ${repo_path}/vimrc.bundles ~/.vimrc.bundles
+ln -s ${repo_path}/.tern-project ~/.tern-project
 ```
 
 此时，你已经可以使用Vim的基础配置了（包含各类不涉及插件的快捷键）。
@@ -81,7 +82,7 @@ ln -s ${repo_path}/vimrc.bundles ~/.vimrc.bundles
 如果你顺利的完成了插件的下载，还有最后一项工作，编译YouCompleteMe：
 
 ```shell
-cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --tern-completer --system-libclang && cd -
+cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --js-completer --system-libclang && cd -
 ```
 
 注意，在执行`install.py`时，如果你的Vim之前显示的是`+ Python`（即拥有python2支持），请使用pyhton2执行该文件，否则请使用python3.3以上的版本执行。
@@ -99,10 +100,10 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --tern-c
 |`;`|相当于按下了`:`，省去按住shift的烦恼|
 |上下左右键|在窗口中上下左右导航，适用于split党|
 |`,<number>`|跳到其中一个tab，适用于tabedit党|
+|`<ctrl-v>`|打开一个新的tab|
+|`,v`|打开一个新的tab|
 |`,tf`|前往第一个tab|
 |`,tl`|前往最后一个tab|
-|`,tm`|相当于`:tabmove`|
-|`,tc`|相当于`:tabclose`|
 |`ctrl-n`|打开目录树|
 |`,f`|打开文件搜索和导航功能|
 |`ctrl-e`|emmet代码扩展|
@@ -110,7 +111,7 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --tern-c
 |`,<space>`|清除文件中多余的空格|
 |`<Ctrl-j>`|触发语义补全菜单,在补全函数的时候非常有用|
 |`,n`|前往文件中下一个被修改过的地方（基于git diff）|
-|`,N`|前往文件中上一个被修改过的地方（基于GIT DIFF）|
+|`,N`|前往文件中上一个被修改过的地方（基于git diff）|
 
 ## 插件说明
 
@@ -139,18 +140,21 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --tern-c
 
 ### YouCompleteMe
 
-非常强大的代码补全和语法检查工具，支持*非常多*的语言。编译型语言的语法检查配置文件位于`~/.vim/.ycm_extra_conf.py`，它通过FlagsForFile函数来导出编译当前文件所需要的编译选项，YouCompleteMe主要通过其中的-I选项来搜索头文件。在搜索当前文件所引用的头文件时，默认的配置文件遵循以下的准则：
+非常强大的代码补全和语法检查工具，支持*非常多*的语言。
+
+编译型语言的语法检查配置文件位于`~/.vim/.ycm_extra_conf.py`，它通过FlagsForFile函数来导出编译当前文件所需要的编译选项，YouCompleteMe主要通过其中的-I选项来搜索头文件。在搜索当前文件所引用的头文件时，默认的配置文件遵循以下的准则：
 
 1. 搜索系统路径`/usr/include`，`/usr/lib`
 2. 搜索当前路径
 3. 搜索当前文件的所有祖先路径（包括当前路径），直到找到最近的在`INCLUDE_DIRECTORIES`中定义的目录（每一种只要存在就会被添加）
-4. 如果当前文件同级路径中存在其它目录（`INCLUDE_DIRECTORIES`定义的目录除外），那么在每一个目录中再次应用本准则；这一条主要用于处理module,比如我们可能会在`src`目录中添加若干第三方模块，那么我们需要把第三方模块的头文件也加入搜索路径。
 
-另外，现在默认配置会根据文件后缀名来自动判断使用哪一种语言规范，默认`.c`和`.cc`文件使用`c99`规范来进行语法检查，而`.cpp`和`.cxx`使用`c++11`规范。
+另外，现在默认配置会根据文件后缀名来自动判断使用哪一种语言规范，默认`.c`文件使用`c99`规范来进行语法检查，而`.cc`,`.cpp`和`.cxx`使用`c++11`规范。
 
 如果上述行为不符合你的项目，你可以参考`~/.vim/.ycm_extra_conf.py`中的`FlagsForFile`函数来自行编写新的行为（注意，`FlagsForFile`函数是必需的）。
 
-使用`<tab>`键来选择。
+对于JavaScript，YouCompleteMe采用tern作为其补全工具，全局补全配置文件为`.tern-project`，默认只对ES-Module和Node风格的代码进行补全，如果你需要其它的补全风格（例如requirejs），可以参考[tern官方文档](http://ternjs.net/doc/manual.html)修改配置文件。
+
+使用`<ctrl-j>`来触发补全，`<tab>`键来选择。
 
 ### emmet
 

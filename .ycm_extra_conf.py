@@ -14,10 +14,6 @@ BASE_FLAGS = [
         '-fexceptions',
         '-ferror-limit=10000',
         '-DNDEBUG',
-        '-isystem',
-        '/usr/include/',
-        '-isystem',
-        '/usr/lib/',
         '-I',
         '.'
         ]
@@ -30,11 +26,11 @@ SOURCE_EXTENSIONS = [
         ]
 
 C_SOURCE_EXTENSIONS = [
-        '.cc',
         '.c'
         ]
 
 CPP_SOURCE_EXTENSIONS = [
+        '.cc',
         '.cpp',
         '.cxx'
         ]
@@ -81,16 +77,6 @@ def findNearest(path, target):
 
     return findNearest(parent, target)
 
-def getModuleIncludeFlags(module_root):
-    flags = [];
-
-    for dirname in os.listdir(module_root):
-        if dirname in HEADER_DIRECTORIES:
-            flags = flags + ['-I', os.path.join(module_root, dirname)];
-
-    return flags;
-
-
 def getIncludeFlags(root, filename):
     include_flags = [];
 
@@ -100,13 +86,6 @@ def getIncludeFlags(root, filename):
         if include_path:
             include_flags = include_flags + ['-I', include_path];
 
-    # collection third party include info
-    for dirname in os.listdir(root):
-        module_root = os.path.join(root, dirname)
-
-        if (os.path.isdir(module_root)):
-            include_flags = include_flags + getModuleIncludeFlags(module_root)
-
     return include_flags;
 
 def getLanguageFlags(filename):
@@ -114,8 +93,10 @@ def getLanguageFlags(filename):
         return ['-xc', '-std=c99']
     elif isCPPSourceFile(filename):
         return ['-xc++', '-std=c++11']
+    elif isHeaderFile(filename):
+        return ['-xc++', '-std=c++11']
     else:
-        return None;
+        return None
 
 
 def FlagsForFile(filename):
