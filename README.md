@@ -68,7 +68,7 @@ Tips: ubuntu14.04默认的Vim不满足版本要求，但是可以使用除代码
 执行如下命令：
 
 ```shell
-#请将${repo_path}替换为仓库路径
+# 请将${repo_path}替换为仓库路径
 ln -s ${repo_path} ~/.vim
 ln -s ${repo_path}/vimrc ~/.vimrc
 ln -s ${repo_path}/vimrc.bundles ~/.vimrc.bundles
@@ -84,6 +84,9 @@ ln -s ${repo_path}/.tern-project ~/.tern-project
 ```shell
 cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --js-completer --system-libclang && cd -
 ```
+
+> 指定`--system-libclang`可以让YCM使用系统本地的clang版本，不指定的情况下安装脚本将会从clang官网下载最新的版本，在大陆地区这个速度会非常慢
+> 如果本地的clang版本略低于要求的clang-3.9.0，目前看来是不影响使用的（我的系统中安装的是clang-3.8.0），但是可能出现未知的Bug，我将会持续关注
 
 注意，在执行`install.py`时，如果你的Vim之前显示的是`+ Python`（即拥有python2支持），请使用pyhton2执行该文件，否则请使用python3.3以上的版本执行。
 
@@ -101,7 +104,6 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --js-com
 |上下左右键|在窗口中上下左右导航，适用于split党|
 |`,<number>`|跳到其中一个tab，适用于tabedit党|
 |`<ctrl-v>`|打开一个新的tab|
-|`,v`|打开一个新的tab|
 |`,tf`|前往第一个tab|
 |`,tl`|前往最后一个tab|
 |`ctrl-n`|打开目录树|
