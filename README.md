@@ -1,5 +1,7 @@
 # NDSLVim
 
+[TOC]
+
 ## 简介
 
 这是一款具有极强针对性的Vim配置，可以作为C-family、HTML、CSS、JS这几种语言的开发编辑器。该配置使用尽可能少的插件，在保证Vim本身作为一个文本编辑器的简洁、迅速特性的前提下，使其功能向IDE（除编译、调试功能）靠拢，包括语法检查、文件导航等。
@@ -7,6 +9,8 @@
 ## 安装环境
 
 ### 系统环境
+
+#### clang
 
 首先，请保证系统中安装了Clang，且版本在3.9以上，这一要求是为了代码补全功能`YouCompleteMe`可以顺利使用。
 
@@ -25,11 +29,15 @@ sudo apt install clang-3.9 clang-3.9-dev
 alias clang="clang-3.9"
 ```
 
+#### python
+
 然后，我们还需要安装python及其开发者包：
 
 ```shell
 sudo apt install python python3 python-dev python3-dev
 ```
+
+#### gcc
 
 对于Ubuntu14.04的用户，你或许还需要检查一下python3的版本是否高于3.3。
 
@@ -39,7 +47,13 @@ sudo apt install python python3 python-dev python3-dev
 g++ --version
 ```
 
-如果你是ubuntu14.04的用户，升级gcc的步骤可以参考[这篇文章](http://www.linuxidc.com/Linux/2016-02/128327.htm)
+如果你是ubuntu的用户，升级gcc的步骤可以参考[这篇文章](http://www.linuxidc.com/Linux/2016-02/128327.htm)
+
+#### node
+
+如果你是一个JavaScript开发者并且希望使用相应的代码补全功能，那么你还需要在系统中安装Node。详细的安装步骤可以参看[官网的安装说明](https://nodejs.org/en/download/)，或者[使用包管理工具来安装](https://nodejs.org/en/download/package-manager/)。
+
+
 
 ### Vim
 
@@ -85,10 +99,9 @@ ln -s ${repo_path}/.tern-project ~/.tern-project
 cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --js-completer --system-libclang && cd -
 ```
 
-> 指定`--system-libclang`可以让YCM使用系统本地的clang版本，不指定的情况下安装脚本将会从clang官网下载最新的版本，在大陆地区这个速度会非常慢
-> 如果本地的clang版本略低于要求的clang-3.9.0，目前看来是不影响使用的（我的系统中安装的是clang-3.8.0），但是可能出现未知的Bug，我将会持续关注
+> 指定`--system-libclang`可以让YCM使用系统本地的clang版本，不指定的情况下安装脚本将会从clang官网下载最新的版本，在大陆地区这个速度会非常慢。如果本地的clang版本略低于要求的clang-3.9.0，目前看来是不影响使用的（我的系统中安装的是clang-3.8.0），但是可能出现未知的Bug，我将会持续关注
 
-注意，在执行`install.py`时，如果你的Vim之前显示的是`+ Python`（即拥有python2支持），请使用pyhton2执行该文件，否则请使用python3.3以上的版本执行。
+注意，在执行`install.py`时，如果你的Vim之前显示的是`+ Python`（即拥有python2支持），请使用python2执行该文件，否则请使用python3.3以上的版本执行。
 
 ## 快捷键
 
@@ -117,8 +130,7 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --js-com
 
 ## 插件说明
 
-> 使用vim-plug作为插件管理工具
-> 以下插件均可以使用`:help <插件名>`来获取更多帮助（忽略大小写）
+> 使用vim-plug作为插件管理工具；以下插件均可以使用`:help <插件名>`来获取更多帮助（忽略大小写）
 
 ### airline
 
