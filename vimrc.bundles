@@ -122,7 +122,7 @@ call plug#end()
     let g:ctrlp_root_markers = ['Makefile', 'makefile']
 
     " activate ctrlP
-    let g:ctrlp_map = '<leader>f'
+    let g:ctrlp_map = '<C-f>'
     let g:ctrlp_cmd = 'CtrlP'
 
     " key map

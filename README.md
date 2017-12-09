@@ -116,15 +116,13 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --js-com
 |`;`|相当于按下了`:`，省去按住shift的烦恼|
 |上下左右键|在窗口中上下左右导航，适用于split党|
 |`,<number>`|跳到其中一个tab，适用于tabedit党|
-|`<ctrl-v>`|打开一个新的tab|
-|`,tf`|前往第一个tab|
-|`,tl`|前往最后一个tab|
-|`ctrl-n`|打开目录树|
-|`,f`|打开文件搜索和导航功能|
-|`ctrl-e`|emmet代码扩展|
+|`<ctrl-t>`|打开一个新的tab|
+|`<ctrl-n>`|打开目录树|
+|`<ctrl-f>`|打开文件搜索和导航功能|
+|`<ctrl-e>`|emmet代码扩展|
 |`{n},c<space>`|（反）注释n行（n可选），或选中区域|
 |`,<space>`|清除文件中多余的空格|
-|`<Ctrl-j>`|触发语义补全菜单,在补全函数的时候非常有用|
+|`<ctrl-j>`|触发语义补全菜单,在补全函数的时候非常有用|
 |`,n`|前往文件中下一个被修改过的地方（基于git diff）|
 |`,N`|前往文件中上一个被修改过的地方（基于git diff）|
 

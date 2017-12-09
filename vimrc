@@ -247,10 +247,9 @@ nnoremap <leader>6 6gt
 nnoremap <leader>7 7gt
 nnoremap <leader>8 8gt
 nnoremap <leader>9 9gt
-nnoremap <leader>0 :tablast<CR>
-nnoremap <leader>tf :tabfirst<CR>
-nnoremap <leader>tl :tablast<CR>
-nnoremap <C-v> :tabedit<CR>
+nnoremap <C-[> :tabprev<CR>
+nnoremap <C-]> :tabnext<CR>
+nnoremap <C-t> :tabedit<CR>
 
 " window navigation
 nnoremap <left> <C-w>h
