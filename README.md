@@ -120,6 +120,8 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --js-com
 |`<ctrl-n>`|打开目录树|
 |`<ctrl-f>`|打开文件搜索和导航功能|
 |`<ctrl-e>`|emmet代码扩展|
+|`<ctrl-h>`|前往前一个tab|
+|`<ctrl-l>`|前往后一个tab|
 |`{n},c<space>`|（反）注释n行（n可选），或选中区域|
 |`,<space>`|清除文件中多余的空格|
 |`<ctrl-j>`|触发语义补全菜单,在补全函数的时候非常有用|
