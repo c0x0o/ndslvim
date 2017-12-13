@@ -15,7 +15,9 @@ BASE_FLAGS = [
         '-ferror-limit=10000',
         '-DNDEBUG',
         '-I',
-        '.'
+        '.',
+        '-I', '/usr/include',
+        '-I', '/usr/local/include'
         ]
 
 SOURCE_EXTENSIONS = [
@@ -50,6 +52,11 @@ HEADER_EXTENSIONS = [
 HEADER_DIRECTORIES = [
         'include',
         'src'
+        ]
+
+CPP_SYSTEM_INCLUDE = [
+        '-I',
+        '/usr/include/c++/7',
         ]
 
 BUILD_DIRECTORY = 'build';
@@ -90,11 +97,11 @@ def getIncludeFlags(root, filename):
 
 def getLanguageFlags(filename):
     if isCSourceFile(filename):
-        return ['-xc', '-std=c99']
+        return ['-x', 'c','-std=c99']
     elif isCPPSourceFile(filename):
-        return ['-xc++', '-std=c++11']
+        return ['-x', 'c++', '-std=c++11'] + CPP_SYSTEM_INCLUDE
     elif isHeaderFile(filename):
-        return ['-xc++', '-std=c++11']
+        return ['-x', 'c++', '-std=c++11'] + CPP_SYSTEM_INCLUDE
     else:
         return None
 
