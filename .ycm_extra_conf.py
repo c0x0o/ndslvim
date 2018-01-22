@@ -14,8 +14,7 @@ BASE_FLAGS = [
         '-fexceptions',
         '-ferror-limit=10000',
         '-DNDEBUG',
-        '-I',
-        '.',
+        '-I', '.',
         '-I', '/usr/include',
         '-I', '/usr/local/include'
         ]
@@ -91,7 +90,7 @@ def getIncludeFlags(root, filename):
     for dirname in HEADER_DIRECTORIES:
         include_path = findNearest(root, dirname)
         if include_path:
-            include_flags = include_flags + ['-I', include_path];
+            include_flags = include_flags + ['-I', include_path, '-isystem', include_path];
 
     return include_flags;
 
