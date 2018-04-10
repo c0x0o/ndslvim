@@ -82,6 +82,9 @@ Tips: ubuntu14.04默认的Vim不满足版本要求，但是可以使用除代码
 执行如下命令：
 
 ```shell
+# 首先你需要移除已有的配置文件或者做一个备份
+rm ~/.vim ~/.viminfo
+
 # 请将${repo_path}替换为仓库路径
 ln -s ${repo_path} ~/.vim
 ln -s ${repo_path}/vimrc ~/.vimrc
