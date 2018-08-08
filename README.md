@@ -10,25 +10,6 @@
 
 ### 系统环境
 
-#### clang
-
-首先，请保证系统中安装了Clang，且版本在3.9以上，这一要求是为了代码补全功能`YouCompleteMe`可以顺利使用。
-
-```shell
-# 保证版本在3.9以上
-clang --version
-```
-
-否则，请到[Clang的官网](http://releases.llvm.org/download.html)上下载最新的版本（目前是4.0.1）。
-
-如果你是Ubuntu的用户（我最爱的Linux发行版之一），可以使用以下命令：
-
-```shell
-# for ubuntu user
-sudo apt install clang-3.9 clang-3.9-dev
-alias clang="clang-3.9"
-```
-
 #### python
 
 然后，我们还需要安装python及其开发者包：
@@ -53,8 +34,6 @@ g++ --version
 
 如果你是一个JavaScript开发者并且希望使用相应的代码补全功能，那么你还需要在系统中安装Node。详细的安装步骤可以参看[官网的安装说明](https://nodejs.org/en/download/)，或者[使用包管理工具来安装](https://nodejs.org/en/download/package-manager/)。
 
-
-
 ### Vim
 
 由于插件的限制，需要对vim本身的版本进行一下检查。如果你不打算使用插件，而是仅仅使用Vim的基础配置，可以跳过这步。
@@ -76,6 +55,8 @@ Tips: ubuntu14.04默认的Vim不满足版本要求，但是可以使用除代码
 
 
 ## 安装
+
+> 添加了一个实验性的安装脚本
 
 首先使用`git`将本仓库克隆至本地。
 

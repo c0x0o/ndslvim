@@ -48,6 +48,7 @@ set hidden
 " show location
 set cursorcolumn
 set cursorline
+set colorcolumn=80
 
 
 " movement
@@ -85,9 +86,9 @@ set shiftround
 
 " indent
 set autoindent smartindent shiftround
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4                " insert mode tab and backspace use 4 spaces
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2                " insert mode tab and backspace use 4 spaces
 
 " NOT SUPPORT
 " fold
@@ -145,7 +146,6 @@ endif
 " theme
 set background=dark
 set t_Co=256
-colorscheme solarized
 " colorscheme molokai
 
 " set mark column color
