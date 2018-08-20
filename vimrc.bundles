@@ -150,6 +150,9 @@ call plug#end()
     let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'    " set default ycm completer config
     let g:ycm_key_invoke_completion = '<C-j>'                       " remap the default completer trigger
 
+    nmap <leader>gd :YcmCompleter GoToDefinition<cr>
+    nmap <leader>gc :YcmCompleter GoToDeclaration<cr>
+    nmap <leader>gi :YcmCompleter GoToInclude<cr>
 " }}}
 
 " emmet {{{
