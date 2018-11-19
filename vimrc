@@ -146,7 +146,7 @@ endif
 " theme
 set background=dark
 set t_Co=256
-" colorscheme molokai
+colorscheme solarized
 
 " set mark column color
 hi! link SignColumn   LineNr

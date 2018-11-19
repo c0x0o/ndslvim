@@ -3,6 +3,14 @@
 set nocompatible
 filetype off " required! turn off
 
+function LoadLanguageSupport()
+  if exists("g:ignore_language_support")
+    return 0
+  else
+    return 1
+  endif
+endfunction
+
 call plug#begin('~/.vim/bundle')
 " ====================== plugin definition ==========================
 
@@ -18,18 +26,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 " TheNerdTree
 " a filesystem tree viewer, toggle with '<C-n>'
 Plug 'scrooloose/nerdtree'
-
-" YouCompleteMe
-" a code completer, use '<tab>' to select
-" you can use vim --cmd "let g:ignore_ycm" to prevent ycm load at start up
-function LoadYcm()
-  if exists("g:ignore_ycm")
-    return 0
-  else
-    return 1
-  endif
-endfunction
-Plug 'Valloric/YouCompleteMe', LoadYcm() ? {} : {'on': []}
 
 " emmet
 " famous emmet! use '<C-e>' to expand
@@ -65,6 +61,28 @@ Plug 'airblade/vim-gitgutter'
 " git wrapper inner vim
 Plug 'tpope/vim-fugitive'
 
+" ** LANGUAGE SUPPORT **
+if LoadLanguageSupport()
+
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+
+  Plug 'Shougo/neosnippet.vim'
+  Plug 'Shougo/neosnippet-snippets'
+
+  " LanguageClient
+  " https://github.com/autozimu/LanguageCliant-neovim
+  Plug 'autozimu/LanguageClient-neovim', {
+        \   'branch': 'next',
+        \   'do': 'bash install.sh'
+        \ }
+
+endif " LoadLanguageSupport
 
 " ==================== plugin definition end ========================
 call plug#end()
@@ -151,18 +169,6 @@ call plug#end()
     let g:NERDTreeMapOpenVSplit = 'v'
 " }}}
 
-" YouCompleteMe {{{
-    let g:ycm_complete_in_comments = 1                              " use completer in comment
-    let g:ycm_seed_identifiers_with_syntax=1                        " complete language key words
-    let g:ycm_goto_buffer_command = 'new-tab'                       " open a new tab when using Goto command
-    let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'    " set default ycm completer config
-    let g:ycm_key_invoke_completion = '<C-j>'                       " remap the default completer trigger
-
-    nmap <leader>gd :YcmCompleter GoToDefinition<cr>
-    nmap <leader>gc :YcmCompleter GoToDeclaration<cr>
-    nmap <leader>gi :YcmCompleter GoToInclude<cr>
-" }}}
-
 " emmet {{{
     let g:user_emmet_expandabbr_key = '<C-e>'
 "   let g:user_emmet_leader_key='<C-e>'
@@ -220,8 +226,6 @@ call plug#end()
     let g:solarized_termtrans=1
     let g:solarized_contrast="normal"
     let g:solarized_visibility="normal"
-
-    colorscheme solarized
 " }}}
 
 " vim-gitgutter {{{
@@ -233,6 +237,47 @@ call plug#end()
 
 " fugitive {{{
 " }}}
+
+if LoadLanguageSupport()
+  " LanguageClient-neovim {{{
+      set hidden
+      let g:LanguageClient_serverCommands = {
+            \ 'cpp': ['~/.vim/cquery',
+            \         '--log-file=/tmp/cquery/log',
+            \         '--init={"cacheDirectory":"/tmp/cquery"}'],
+            \ 'cc': ['~/.vim/cquery',
+            \         '--log-file=/tmp/cquery/log',
+            \         '--init={"cacheDirectory":"/tmp/cquery"}'],
+            \ 'c': ['~/.vim/cquery',
+            \         '--log-file=/tmp/cquery/log',
+            \         '--init={"cacheDirectory":"/tmp/cquery"}']
+            \ }
+
+      set completefunc=LanguageClient#complete
+      set formatexpr=LanguageClient_textDocument_rangeFormatting()
+      let g:LanguageClient_rootMarkers = [
+            \ '.git',
+            \ '.svn',
+            \ 'project.*'
+            \ ]
+
+      nnoremap <silent>gh :call LanguageClient#textDocument_hover()<CR>
+      nnoremap <silent>gd :call LanguageClient#textDocument_definition()<CR>
+      nnoremap <silent>gr :call LanguageClient#textDocument_references()<CR>
+  " }}}
+
+  " deoplete {{{
+      let g:deoplete#enable_at_startup = 1
+  " }}}
+
+  " neosnippet {{{
+  "   let g:neosnippet#snippets_directory='~/.vim/snippets'
+      imap <expr><TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ neosnippet#jumpable() ?
+        \    "\<Plug>(neosnippet_jump)" : "\<TAB>"
+  " }}}
+endif
 
 " ==================== configuration end ============================
 

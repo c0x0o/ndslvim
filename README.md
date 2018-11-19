@@ -6,26 +6,16 @@
 
 这是一款具有极强针对性的Vim配置，可以作为C-family、HTML、CSS、JS这几种语言的开发编辑器。该配置使用尽可能少的插件，在保证Vim本身作为一个文本编辑器的简洁、迅速特性的前提下，使其功能向IDE（除编译、调试功能）靠拢，包括语法检查、文件导航等。
 
-## 安装环境
+## 安装
 
 ### 系统环境
 
 #### python
 
-然后，我们还需要安装python及其开发者包：
+我们需要安装python及其包管理工具（如果你能确定编译vim时提供了对应版本的python支持，那么可以只安装对应版本即可，建议使用python3）：
 
 ```shell
-sudo apt install python python3 python-dev python3-dev
-```
-
-#### gcc
-
-对于Ubuntu14.04的用户，你或许还需要检查一下python3的版本是否高于3.3。
-
-接下来，由于编译YouCompleteMe插件需要你的C++编译器完整的支持c++11特性，如果你使用GNU gcc作为你的编译工具请确保它的版本在4.9及以上。
-
-```shell
-g++ --version
+sudo apt install python python3 python3-pip python-pip
 ```
 
 如果你是ubuntu的用户，升级gcc的步骤可以参考[这篇文章](http://www.linuxidc.com/Linux/2016-02/128327.htm)
@@ -34,14 +24,14 @@ g++ --version
 
 如果你是一个JavaScript开发者并且希望使用相应的代码补全功能，那么你还需要在系统中安装Node。详细的安装步骤可以参看[官网的安装说明](https://nodejs.org/en/download/)，或者[使用包管理工具来安装](https://nodejs.org/en/download/package-manager/)。
 
-### Vim
+#### Vim
 
 由于插件的限制，需要对vim本身的版本进行一下检查。如果你不打算使用插件，而是仅仅使用Vim的基础配置，可以跳过这步。
 
 ```shell
 # 检查版本，只看前两行
-# 第一行代表了Vim的主版本号，请确认它大于7.4
-# 第二行代表了补丁号，形式为x-xxxx，请确保短线后面的数字大于1578
+# 第一行代表了Vim的主版本号，请确认它大于8.0
+# 第二行代表了补丁号，形式为x-xxxx，不做硬性要求
 vim --version
 
 # 检查接口
@@ -56,38 +46,10 @@ Tips: ubuntu14.04默认的Vim不满足版本要求，但是可以使用除代码
 
 ## 安装
 
-> 添加了一个实验性的安装脚本
-
-首先使用`git`将本仓库克隆至本地。
-
-执行如下命令：
-
 ```shell
-# 首先你需要移除已有的配置文件或者做一个备份
-rm ~/.vim ~/.viminfo
-
-# 请将${repo_path}替换为仓库路径
-ln -s ${repo_path} ~/.vim
-ln -s ${repo_path}/vimrc ~/.vimrc
-ln -s ${repo_path}/vimrc.bundles ~/.vimrc.bundles
-ln -s ${repo_path}/.tern-project ~/.tern-project
+# 将$NDSLVIM_BASE替换为仓库的路径
+cd $NDSLVIM_BASE && ./install.sh
 ```
-
-此时，你已经可以使用Vim的基础配置了（包含各类不涉及插件的快捷键）。
-
-接着启动Vim，然后输入`:PlugInstall`，等待安装完成。由于插件安装涉及从github克隆插件仓库，这将花费大量的时间（约2～3个小时，取决于你的网速和人品），没有什么特别好的方法，也许后面我会提供一个镜像供大家下载。
-
-如果你顺利的完成了插件的下载，还有最后一项工作，编译YouCompleteMe：
-
-```shell
-# 指定`--system-libclang`可以让YCM使用系统本地的clang版本，可以用来解决可能出现的下载clang过慢的问题。
-# 但是我非常不建议这么做，可以用下面提到的另一种办法来解决这个问题
-cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --js-completer && cd -
-```
-
-> 如果下载太慢，可以自行在官网下载最新的包，然后拷贝至`./bundle/YouCompleteMe/third_party/ycmd/clang_archives`目录下（不需要解压缩）
-
-注意，在执行`install.py`时，如果你的Vim之前显示的是`+ Python`（即拥有python2支持），请使用python2执行该文件，否则请使用python3.3以上的版本执行。
 
 ## 快捷键
 
@@ -110,7 +72,6 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --js-com
 |`<ctrl-l>`|前往后一个tab|
 |`{n},c<space>`|（反）注释n行（n可选），或选中区域|
 |`,<space>`|清除文件中多余的空格|
-|`<ctrl-j>`|触发语义补全菜单,在补全函数的时候非常有用|
 |`,n`|前往文件中下一个被修改过的地方（基于git diff）|
 |`,N`|前往文件中上一个被修改过的地方（基于git diff）|
 
@@ -138,23 +99,17 @@ cd ~/.vim/bundle/YouCompleteMe && python ./install.py --clang-completer --js-com
 
 使用ctrl-n来打开或关闭，使用:help NERDTree来获取更多帮助
 
-### YouCompleteMe
+### Language Support
 
-非常强大的代码补全和语法检查工具，支持*非常多*的语言。
+> 使用cquery，LanguageClient-neovim，neosnippets.nvim的组合替代了原有的YCM
 
-编译型语言的语法检查配置文件位于`~/.vim/.ycm_extra_conf.py`，它通过FlagsForFile函数来导出编译当前文件所需要的编译选项，YouCompleteMe主要通过其中的-I选项来搜索头文件。在搜索当前文件所引用的头文件时，默认的配置文件遵循以下的准则：
+`Language Support`功能使用LanguageClient-neovim替代了原有的YCM，来作为新的语法支持工具。目前只实现了对C-family语言的支持，该支持基于`compile_commands.json`实现，具体的生成`compile_commands.json`文件的方法，请参考你所使用的编译工具链的说明（主流的编译器或工具链都有对应的工具支持，如cmake，clang，gcc等）。
 
-1. 搜索系统路径`/usr/include`，`/usr/lib`
-2. 搜索当前路径
-3. 搜索当前文件的所有祖先路径（包括当前路径），直到找到最近的在`INCLUDE_DIRECTORIES`中定义的目录（每一种只要存在就会被添加）
+鉴于cquery在超大的C-family项目中内存占用巨大，启动时间较长（对于完整的chrome项目，内存占用最高可达10G），你可以在启动时增加额外的参数来屏蔽`Language Support特性`：
 
-另外，现在默认配置会根据文件后缀名来自动判断使用哪一种语言规范，默认`.c`文件使用`c99`规范来进行语法检查，而`.cc`,`.cpp`和`.cxx`使用`c++11`规范。
-
-如果上述行为不符合你的项目，你可以参考`~/.vim/.ycm_extra_conf.py`中的`FlagsForFile`函数来自行编写新的行为（注意，`FlagsForFile`函数是必需的）。
-
-对于JavaScript，YouCompleteMe采用tern作为其补全工具，全局补全配置文件为`.tern-project`，默认只对ES-Module和Node风格的代码进行补全，如果你需要其它的补全风格（例如requirejs），可以参考[tern官方文档](http://ternjs.net/doc/manual.html)修改配置文件。
-
-使用`<ctrl-j>`来触发补全，`<tab>`键来选择。
+```shell
+alias vimp="vim --cmd \"let g:ignore_language_support=1\""
+```
 
 ### emmet
 

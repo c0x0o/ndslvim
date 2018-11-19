@@ -1,56 +1,63 @@
 #!/bin/bash
 
-info() {
-  echo "ndslvim: $1"
-}
-stage-start() {
-  echo -n "ndslvim: $1..."
-}
-stage-end() {
-  echo $1
-}
+VIMBASE=`pwd`
+LINKS="$HOME/.vim $HOME/.vimrc $HOME/.vimrc.bundles"
+BUNDLE_BASE=$VIMBASE/bundle
+VIMBIN=$VIMBASE
+CQUERY_REPO="https://github.com/cquery-project/cquery"
 
-install() {
+# create links
+for link in $LINKS; do
+  if [ -e $link ]; then
+    rm $link;
+  fi
+done
 
-  cd `dirname $0`
-  NDSLVIM_BASE=`pwd`
-  NDSLVIM_FILES="$HOME/.vim $HOME/.vimrc $HOME/.vimrc.bundles $HOME/.ycm_extra_config.py $HOME/.tern-project"
+ln -s $VIMBASE/vimrc $HOME/.vimrc
+ln -s $VIMBASE/vimrc.bundles $HOME/.vimrc.bundles
+ln -s $VIMBASE ${HOME}/.vim
 
-  rm ~/.viminfo 2>/dev/null
+# install dependencies
+echo "install dependencies"
+pip 2>/dev/null && pip install neovim
+pip3 1>/dev/null 2>/dev/null && pip3 install neovim
+if [ $? -ne 0 ]; then
+  echo "python-pip or python3-pip not installed, exit"
+  exit
+fi
+echo "install dependecies done"
 
-  info "start installing process"
+# install plugins
+vim -u $VIMBASE/vimrc.bundles +"PlugInstall!" +"PlugClean!" +"qall"
+if [ $? -ne 0 ]; then
+  echo "installing plugins failed"
+  exit 1
+fi
+echo "all plugins cloned"
 
-  # backup config
-  stage-start "backup your old settings"
-  for file in $NDSLVIM_FILES
-  do
-    if [ -e $file ]
-    then
-      if [ -L $file ]
-      then
-	unlink $file
-      else
-	mv $file `dirname $file`/`basename $file`.old
-      fi
+# install cquery
+echo "Installing cquery requires downloading latest llvm which may take a while"
+if [ ! -e $BUNDLE_BASE/cquery ]; then
+  git clone --recursive $CQUERY_REPO $BUNDLE_BASE/cquery
+
+  if [ $? -eq 0 ]; then
+    mkdir $BUNDLE_BASE/cquery/build
+    cd $BUNDLE_BASE/cquery/build
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+    cmake --build .
+    cd $VIMBASE
+    if [ -e $VIMBASE/cquery ]; then
+      rm $VIMBASE/cquery;
     fi
-  done
-  stage-end "success"
+    ln -s $BUNDLE_BASE/cquery/build/cquery $VIMBASE/cquery
+    echo "cquery installed"
+  else
+    echo "cquery install failed"
+  fi
+else
+  echo "cquery already installed"
+fi
 
-  # deploy base environment
-  stage-start "deploy base environment"
-  ln -s $NDSLVIM_BASE ~/.vim
-  ln -s $NDSLVIM_BASE/ycm_extra_config.py ~/.ycm_extra_config.py
-  ln -s $NDSLVIM_BASE/tern-project ~/.tern-project
+# done
+echo "done"
 
-  # clone plugin
-  vim -u $NDSLVIM_BASE/vimrc.bundles +PlugInstall! +PlugClean! +qall
-
-  ln -s $NDSLVIM_BASE/vimrc ~/.vimrc
-  ln -s $NDSLVIM_BASE/vimrc.bundles ~/.vimrc.bundles
-  stage-end "success"
-
-  # install ycm
-  python3 $DNSLVIM_BASE/bundles/YouCompleteMe/install.py --clange-completer $1
-}
-
-install $1

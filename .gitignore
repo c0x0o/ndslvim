@@ -1,3 +1,5 @@
 /bundle/*
 /.netrwhist
 !/bundle/README.md
+/cquery
+/autoload/plug.vim.old
