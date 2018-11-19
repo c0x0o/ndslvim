@@ -50,7 +50,8 @@ HEADER_EXTENSIONS = [
 
 HEADER_DIRECTORIES = [
         'include',
-        'src'
+        'src',
+        'googletest/googletest/include'
         ]
 
 CPP_SYSTEM_INCLUDE = [

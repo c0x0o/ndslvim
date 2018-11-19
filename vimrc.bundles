@@ -21,7 +21,15 @@ Plug 'scrooloose/nerdtree'
 
 " YouCompleteMe
 " a code completer, use '<tab>' to select
-Plug 'Valloric/YouCompleteMe'
+" you can use vim --cmd "let g:ignore_ycm" to prevent ycm load at start up
+function LoadYcm()
+  if exists("g:ignore_ycm")
+    return 0
+  else
+    return 1
+  endif
+endfunction
+Plug 'Valloric/YouCompleteMe', LoadYcm() ? {} : {'on': []}
 
 " emmet
 " famous emmet! use '<C-e>' to expand
@@ -68,7 +76,7 @@ call plug#end()
 " airline {{{
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}
-   endif
+    endif
 
     let g:airline_theme='luna'
     let g:airline#extensions#tabline#enabled = 1
@@ -111,7 +119,7 @@ call plug#end()
 " ctrlP {{{
     " Setup some default ignores
     let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\v[\/]((\.(git|hg|svn)|\_site)|node_modules|bower_modules)$',
+                \ 'dir':  '\v[\/]((\.(git|hg|svn)|\_site)|node_modules|bower_modules|build)$',
                 \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg|tar|tar.gz|tar.bz2|pyc|o)$',
                 \}
     let g:ctrlp_show_hidden = 1
