@@ -7,6 +7,11 @@ VIMBIN=$VIMBASE
 CQUERY_REPO="https://github.com/cquery-project/cquery"
 LANG_SERVER_BASE="$VIMBASE/lang-server"
 
+# check dir existence
+if [ ! -e $HOME/.config ]; then
+  mkdir $HOME/.config
+fi
+
 # create links
 for link in $LINKS; do
   if [ -L $link -o -e $link ]; then
