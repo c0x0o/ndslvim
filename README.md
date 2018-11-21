@@ -26,23 +26,7 @@ sudo apt install python python3 python3-pip python-pip
 
 #### Vim
 
-由于插件的限制，需要对vim本身的版本进行一下检查。如果你不打算使用插件，而是仅仅使用Vim的基础配置，可以跳过这步。
-
-```shell
-# 检查版本，只看前两行
-# 第一行代表了Vim的主版本号，请确认它大于8.0
-# 第二行代表了补丁号，形式为x-xxxx，不做硬性要求
-vim --version
-
-# 检查接口
-# 请观察输出结果中是否含有'+python'或'+python3'字样，确保它们存在
-vim --version | grep "python"
-```
-
-如果你的Vim没有满足第一个要求，你将不能使用代码补全和语法检查功能。如果你没有满足第二个要求，那么悲剧了，你需要重新自行编译Vim或者下载满足要求的Vim。
-
-Tips: ubuntu14.04默认的Vim不满足版本要求，但是可以使用除代码检查和补全之外的其它功能。想要升级的用户，可以参考[这篇文章](http://blog.csdn.net/gatieme/article/details/52752070)
-
+考虑到插件更新状况和性能原因，目前本仓库从Vim迁移至![neovim](https://github.com/neovim/neovim)，计划在v2.0发布后开始兼容Vim 8.1及以上版本。要使用完整的语言支持功能，请下载最新版本的neovim（^v0.3.0）。
 
 ## 安装
 
@@ -74,6 +58,8 @@ cd $NDSLVIM_BASE && ./install.sh
 |`,<space>`|清除文件中多余的空格|
 |`,n`|前往文件中下一个被修改过的地方（基于git diff）|
 |`,N`|前往文件中上一个被修改过的地方（基于git diff）|
+|`gd`|go to definitions|
+|`gh`|go to references|
 
 ## 插件说明
 
@@ -101,7 +87,7 @@ cd $NDSLVIM_BASE && ./install.sh
 
 ### Language Support
 
-> 使用cquery，LanguageClient-neovim，neosnippets.nvim的组合替代了原有的YCM
+> 使用cquery，LanguageClient-neovim，ncm2的组合替代了原有的YCM
 
 `Language Support`功能使用LanguageClient-neovim替代了原有的YCM，来作为新的语法支持工具。目前只实现了对C-family语言的支持，该支持基于`compile_commands.json`实现，具体的生成`compile_commands.json`文件的方法，请参考你所使用的编译工具链的说明（主流的编译器或工具链都有对应的工具支持，如cmake，clang，gcc等）。
 

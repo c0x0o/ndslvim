@@ -11,7 +11,7 @@ function LoadLanguageSupport()
   endif
 endfunction
 
-call plug#begin('~/.vim/bundle')
+call plug#begin('~/.config/nvim/bundle')
 " ====================== plugin definition ==========================
 
 " airline
@@ -64,16 +64,13 @@ Plug 'tpope/vim-fugitive'
 " ** LANGUAGE SUPPORT **
 if LoadLanguageSupport()
 
-  if has('nvim')
-    Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-  else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
-
-  Plug 'Shougo/neosnippet.vim'
-  Plug 'Shougo/neosnippet-snippets'
+  Plug 'roxma/nvim-yarp'
+  Plug 'ncm2/ncm2'
+  Plug 'ncm2/ncm2-snipmate'
+  Plug 'ncm2/ncm2-path'
+  Plug 'tomtom/tlib_vim'
+  Plug 'marcweber/vim-addon-mw-utils'
+  Plug 'garbas/vim-snipmate'
 
   " LanguageClient
   " https://github.com/autozimu/LanguageCliant-neovim
@@ -242,19 +239,17 @@ if LoadLanguageSupport()
   " LanguageClient-neovim {{{
       set hidden
       let g:LanguageClient_serverCommands = {
-            \ 'cpp': ['~/.vim/cquery',
+            \ 'cpp': ['~/.config/nvim/lang-server/cquery/build/cquery',
             \         '--log-file=/tmp/cquery/log',
             \         '--init={"cacheDirectory":"/tmp/cquery"}'],
-            \ 'cc': ['~/.vim/cquery',
+            \ 'cc':  ['~/.config/nvim/lang-server/cquery/build/cquery',
             \         '--log-file=/tmp/cquery/log',
             \         '--init={"cacheDirectory":"/tmp/cquery"}'],
-            \ 'c': ['~/.vim/cquery',
+            \ 'c':   ['~/.config/nvim/lang-server/cquery/build/cquery',
             \         '--log-file=/tmp/cquery/log',
             \         '--init={"cacheDirectory":"/tmp/cquery"}']
             \ }
 
-      set completefunc=LanguageClient#complete
-      set formatexpr=LanguageClient_textDocument_rangeFormatting()
       let g:LanguageClient_rootMarkers = [
             \ '.git',
             \ '.svn',
@@ -266,16 +261,19 @@ if LoadLanguageSupport()
       nnoremap <silent>gr :call LanguageClient#textDocument_references()<CR>
   " }}}
 
-  " deoplete {{{
-      let g:deoplete#enable_at_startup = 1
-  " }}}
+  " ncm2 {{{
+      let g:snips_no_mappings = 1
+      autocmd BufEnter * call ncm2#enable_for_buffer()
+      au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+      au User Ncm2PopupClose set completeopt=menuone
 
-  " neosnippet {{{
-  "   let g:neosnippet#snippets_directory='~/.vim/snippets'
-      imap <expr><TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ neosnippet#jumpable() ?
-        \    "\<Plug>(neosnippet_jump)" : "\<TAB>"
+      inoremap <silent> <expr> <CR> ncm2_snipmate#expand_or("\<CR>", 'n')
+      inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+      inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+      vmap <c-j> <Plug>snipMateNextOrTrigger
+      vmap <c-k> <Plug>snipMateBack
+      imap <expr> <c-k> pumvisible() ? "\<c-y>\<Plug>snipMateBack" : "\<Plug>snipMateBack"
+      imap <expr> <c-j> pumvisible() ? "\<c-y>\<Plug>snipMateNextOrTrigger" : "\<Plug>snipMateNextOrTrigger"
   " }}}
 endif
 

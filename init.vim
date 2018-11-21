@@ -8,10 +8,8 @@ syntax on
 " ============================ import bundle file =================================
 
 " install bundles
-if filereadable(expand("~/.vimrc.bundles"))
-  source ~/.vimrc.bundles
-elseif filereadable(expand("~/.config/nvim/vimrc.bundles")) " neovim
-  source ~/.config/nvim/vimrc.bundles
+if filereadable(expand("~/.config/nvim/init-bundle.vim")) " neovim
+  source ~/.config/nvim/init-bundle.vim
 endif
 
 " ============================ basic settings =====================================
@@ -210,6 +208,7 @@ nnoremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 " ;; 替换 Esc
 map ;; <Esc>
 inoremap ;; <ESC>
+map <C-c> <Esc>
 
 " Swap implementations of ` and ' jump to markers
 " By default, ' jumps to the marked line, ` jumps to the marked line and
