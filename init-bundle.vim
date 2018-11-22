@@ -78,6 +78,7 @@ if LoadLanguageSupport()
         \   'branch': 'next',
         \   'do': 'bash install.sh'
         \ }
+  Plug 'Shougo/echodoc.vim'
 
 endif " LoadLanguageSupport
 
@@ -237,7 +238,6 @@ call plug#end()
 
 if LoadLanguageSupport()
   " LanguageClient-neovim {{{
-      set hidden
       let g:LanguageClient_serverCommands = {
             \ 'cpp': ['~/.config/nvim/lang-server/cquery/build/cquery',
             \         '--log-file=/tmp/cquery/log',

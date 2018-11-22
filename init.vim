@@ -42,6 +42,8 @@ set tm=500
 set mouse-=a                    " no mouse
 set hidden
 
+set signcolumn=yes
+
 
 " show location
 set cursorcolumn
