@@ -49,7 +49,7 @@ Plug 'vim-scripts/matchit.zip'
 
 " theme
 Plug 'kien/rainbow_parentheses.vim'         " for parentheses
-Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 Plug 'tomasr/molokai'
 
 " git tools
@@ -220,10 +220,7 @@ call plug#end()
     let g:rehash256 = 1
 " }}}
 
-" solarized {{{
-    let g:solarized_termtrans=1
-    let g:solarized_contrast="normal"
-    let g:solarized_visibility="normal"
+" solarized8 {{{
 " }}}
 
 " vim-gitgutter {{{

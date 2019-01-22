@@ -145,8 +145,8 @@ endif
 
 " theme
 set background=dark
-set t_Co=256
-colorscheme solarized
+set termguicolors
+colorscheme solarized8
 
 " set mark column color
 hi! link SignColumn   LineNr
