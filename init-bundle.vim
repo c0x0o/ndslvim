@@ -116,13 +116,6 @@ call plug#end()
     let g:airline_symbols.notexists = '∄'
     let g:airline_symbols.whitespace = 'Ξ'
 
-    " co-op with YouCompleteMe
-    let g:airline#extensions#ycm#enabled = 1
-    " set error count prefix >
-    let g:airline#extensions#ycm#error_symbol = 'E:'
-    " set warning count prefix >
-    let g:airline#extensions#ycm#warning_symbol = 'W:'
-
     " co-op with fugitive
     let g:airline#extensions#branch#enabled = 1
     let g:airline#extensions#branch#empty_message = 'no branch info'
@@ -252,6 +245,7 @@ if LoadLanguageSupport()
             \ '.svn',
             \ 'project.*'
             \ ]
+      let g:LanguageClient_useVirtualText = 0
 
       nnoremap <silent>gh :call LanguageClient#textDocument_hover()<CR>
       nnoremap <silent>gd :call LanguageClient#textDocument_definition()<CR>

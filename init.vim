@@ -208,7 +208,6 @@ au InsertLeave * set nopaste
 nnoremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
 " ;; 替换 Esc
-inoremap ;; <ESC>
 inoremap <C-c> <Esc>
 vnoremap <C-c> <Esc>
 
@@ -258,7 +257,3 @@ nnoremap <left> <C-w>h
 nnoremap <right> <C-w>l
 nnoremap <up> <C-w>k
 nnoremap <down> <C-w>j
-
-" terminal
-nnoremap <C-c> :tabedit term://bash<CR>
-tnoremap <ESC> <C-\><C-n>
