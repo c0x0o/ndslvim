@@ -246,6 +246,32 @@ if LoadLanguageSupport()
             \ 'project.*'
             \ ]
       let g:LanguageClient_useVirtualText = 0
+      let g:LanguageClient_diagnosticsDisplay = {
+            \   1: {
+            \     "name": "Error",
+            \     "texthl": "ALEError",
+            \     "signText": "x",
+            \     "signTexthl": "ALEErrorSign"
+            \   },
+            \   2: {
+            \     "name": "Warning",
+            \     "texthl": "ALEWarning",
+            \     "signText": "!",
+            \     "signTexthl": "ALEWarningSign"
+            \   },
+            \   3: {
+            \     "name": "Information",
+            \     "texthl": "ALEInfo",
+            \     "signText": ">",
+            \     "signTexthl": "ALEInfoSign"
+            \   },
+            \   4: {
+            \     "name": "Hint",
+            \     "texthl": "ALEInfo",
+            \     "signText": "*",
+            \     "signTexthl": "ALEInfoSign"
+            \   }
+            \ }
 
       nnoremap <silent>gh :call LanguageClient#textDocument_hover()<CR>
       nnoremap <silent>gd :call LanguageClient#textDocument_definition()<CR>
