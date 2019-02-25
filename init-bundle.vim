@@ -66,11 +66,9 @@ if LoadLanguageSupport()
 
   Plug 'roxma/nvim-yarp'
   Plug 'ncm2/ncm2'
-  Plug 'ncm2/ncm2-snipmate'
   Plug 'ncm2/ncm2-path'
-  Plug 'tomtom/tlib_vim'
-  Plug 'marcweber/vim-addon-mw-utils'
-  Plug 'garbas/vim-snipmate'
+  Plug 'ncm2/ncm2-ultisnips'
+  Plug 'SirVer/ultisnips'
 
   " LanguageClient
   " https://github.com/autozimu/LanguageCliant-neovim
@@ -229,15 +227,9 @@ call plug#end()
 if LoadLanguageSupport()
   " LanguageClient-neovim {{{
       let g:LanguageClient_serverCommands = {
-            \ 'cpp': ['~/.config/nvim/lang-server/cquery/build/cquery',
-            \         '--log-file=/tmp/cquery/log',
-            \         '--init={"cacheDirectory":"/tmp/cquery"}'],
-            \ 'cc':  ['~/.config/nvim/lang-server/cquery/build/cquery',
-            \         '--log-file=/tmp/cquery/log',
-            \         '--init={"cacheDirectory":"/tmp/cquery"}'],
-            \ 'c':   ['~/.config/nvim/lang-server/cquery/build/cquery',
-            \         '--log-file=/tmp/cquery/log',
-            \         '--init={"cacheDirectory":"/tmp/cquery"}']
+            \ 'cpp': ['/usr/bin/clangd-6.0', '-enable-snippets'],
+            \ 'cc':  ['/usr/bin/clangd-6.0', '-enable-snippets'],
+            \ 'c':   ['/usr/bin/clangd-6.0', '-enable-snippets']
             \ }
 
       let g:LanguageClient_rootMarkers = [
@@ -284,13 +276,18 @@ if LoadLanguageSupport()
       au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
       au User Ncm2PopupClose set completeopt=menuone
 
-      inoremap <silent> <expr> <CR> ncm2_snipmate#expand_or("\<CR>", 'n')
-      inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-      inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-      vmap <c-j> <Plug>snipMateNextOrTrigger
-      vmap <c-k> <Plug>snipMateBack
-      imap <expr> <c-k> pumvisible() ? "\<c-y>\<Plug>snipMateBack" : "\<Plug>snipMateBack"
-      imap <expr> <c-j> pumvisible() ? "\<c-y>\<Plug>snipMateNextOrTrigger" : "\<Plug>snipMateNextOrTrigger"
+      inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+      inoremap <expr> <Tab> pumvisible() ? "\<Down>" : "\<Tab>"
+      inoremap <expr> <S-Tab> pumvisible() ? "\<Up>" : "\<S-Tab>"
+      let g:UltiSnipsExpandTrigger="<c-cr>"
+      let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+      let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+      let g:UltiSnipsRemoveSelectModeMappings = 0
+  " }}}
+
+  " echodoc {{{
+      let g:echodoc#enable_at_startup = 1
+      let g:echodoc#type = 'signature'
   " }}}
 endif
 
