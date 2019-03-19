@@ -5,33 +5,27 @@
 ## 简介
 
 这是一款具有极强针对性的Vim配置，可以作为C-family、HTML、CSS、JS这几种语言的开发编辑器。该配置使用尽可能少的插件，在保证Vim本身作为一个文本编辑器的简洁、迅速特性的前提下，使其功能向IDE（除编译、调试功能）靠拢，包括语法检查、文件导航等。
+
 ## 安装
 
 ### 系统环境
 
-#### python
-
-我们需要安装python及其包管理工具（如果你能确定编译vim时提供了对应版本的python支持，那么可以只安装对应版本即可，建议使用python3）：
+需要`nvim 3.0`及以上版本，`nodejs`，`yarn`，`gcc 7.2`及以上版本并安装以下库：
 
 ```shell
-sudo apt install python python3 python3-pip python-pip
+sudo apt install cmake libncurses-dev python3-pip python3-dev
 ```
 
-如果你是ubuntu的用户，升级gcc的步骤可以参考[这篇文章](http://www.linuxidc.com/Linux/2016-02/128327.htm)
+### 安装
 
-#### node
-
-如果你是一个JavaScript开发者并且希望使用相应的代码补全功能，那么你还需要在系统中安装Node。详细的安装步骤可以参看[官网的安装说明](https://nodejs.org/en/download/)，或者[使用包管理工具来安装](https://nodejs.org/en/download/package-manager/)。
-
-#### Vim
-
-考虑到插件更新状况和性能原因，目前本仓库从Vim迁移至![neovim](https://github.com/neovim/neovim)，计划在v2.0发布后开始兼容Vim 8.1及以上版本。要使用完整的语言支持功能，请下载最新版本的neovim（^v0.3.0）。
-
-## 安装
+请不要使用`sudo`来启动脚本！
 
 ```shell
 # 将$NDSLVIM_BASE替换为仓库的路径
 cd $NDSLVIM_BASE && ./install.sh
+
+# 或者通常情况下，你需要一个代理来避免网络错误
+cd $NDSLVIM_BASE && proxychains ./install.sh
 ```
 
 ## 快捷键
@@ -42,7 +36,7 @@ cd $NDSLVIM_BASE && ./install.sh
 |`<F4>`|是否折叠行|
 |`<F5>`|是否开启PASTE模式|
 |`<F6>`|是否开启语法高亮|
-|`;;`|相当于`<ESC>`，任何模式下都有效|
+|`<ctrl-c>`|相当于`<ESC>`，任何模式下都有效|
 |`,/`|取消高亮（通常是指搜索的高亮）|
 |`;`|相当于按下了`:`，省去按住shift的烦恼|
 |上下左右键|在窗口中上下左右导航，适用于split党|
@@ -59,8 +53,7 @@ cd $NDSLVIM_BASE && ./install.sh
 |`,N`|前往文件中上一个被修改过的地方（基于git diff）|
 |`gd`|go to definitions|
 |`gh`|go to references|
-|`<ctrl-c>`|打开一个模拟命令行终端，然后进入编辑模式就可以执行命令|
-|`<ESC>`|在模拟终端中按ESC即可对当前终端界面内容进行*只读*编辑，比如复制命令输出，当前终端会话相当于被关闭|
+|`<ctrl-j>`和`<ctrl-k>`|补全后可以在snippet内部进行跳转|
 
 ## 插件说明
 
@@ -88,11 +81,12 @@ cd $NDSLVIM_BASE && ./install.sh
 
 ### Language Support
 
-> 使用cquery，LanguageClient-neovim，ncm2的组合替代了原有的YCM
+使用`coc.nvim`来作为标准的Language Client，使用`ccls`作为C语言补全工具，你可以
+自行添加其他的语言功能，详情请见![coc.nvim](https://github.com/neoclide/coc.nvim)。
+另外，`ccls`可以使用额外的项目级别的配置来自定义你自己的项目编译方式，详情见
+![ccls](https://github.com/MaskRay/ccls)
 
-`Language Support`功能使用LanguageClient-neovim替代了原有的YCM，来作为新的语法支持工具。目前只实现了对C-family语言的支持，该支持基于`compile_commands.json`实现，具体的生成`compile_commands.json`文件的方法，请参考你所使用的编译工具链的说明（主流的编译器或工具链都有对应的工具支持，如cmake，clang，gcc等）。
-
-鉴于cquery在超大的C-family项目中内存占用巨大，启动时间较长（对于完整的chrome项目，内存占用最高可达10G），你可以在启动时增加额外的参数来屏蔽`Language Support特性`：
+你也可以使用如下命令来屏蔽语言支持功能：
 
 ```shell
 alias vimp="vim --cmd \"let g:ignore_language_support=1\""

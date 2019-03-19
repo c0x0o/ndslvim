@@ -63,21 +63,9 @@ Plug 'tpope/vim-fugitive'
 
 " ** LANGUAGE SUPPORT **
 if LoadLanguageSupport()
-
-  Plug 'roxma/nvim-yarp'
-  Plug 'ncm2/ncm2'
-  Plug 'ncm2/ncm2-path'
-  Plug 'ncm2/ncm2-ultisnips'
-  Plug 'SirVer/ultisnips'
-
   " LanguageClient
-  " https://github.com/autozimu/LanguageCliant-neovim
-  Plug 'autozimu/LanguageClient-neovim', {
-        \   'branch': 'next',
-        \   'do': 'bash install.sh'
-        \ }
-  Plug 'Shougo/echodoc.vim'
-
+  " https://github.com/neoclide/coc.nvim
+  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 endif " LoadLanguageSupport
 
 " ==================== plugin definition end ========================
@@ -225,69 +213,28 @@ call plug#end()
 " }}}
 
 if LoadLanguageSupport()
-  " LanguageClient-neovim {{{
-      let g:LanguageClient_serverCommands = {
-            \ 'cpp': ['/usr/bin/clangd-6.0', '-enable-snippets'],
-            \ 'cc':  ['/usr/bin/clangd-6.0', '-enable-snippets'],
-            \ 'c':   ['/usr/bin/clangd-6.0', '-enable-snippets']
-            \ }
+  " coc.nvim
+  " {{{
+      call coc#config('languageserver', {
+        \   "ccls": {
+        \     "command": $HOME."/.config/nvim/lang-server/ccls/Release/ccls",
+        \     "filetypes": ["c", "cpp", "cuda", "objc", "objcpp", "cc"],
+        \     "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/", "WORKSPACE"],
+        \     "initializationOptions": {
+        \       "cache": {
+        \         "directory": "/tmp/ccls"
+        \       }
+        \     }
+        \   }
+        \})
+      nmap gd :call CocAction('jumpDefinition')<CR>
+      nmap gh :call CocAction('jumpReferences')<CR>
 
-      let g:LanguageClient_rootMarkers = [
-            \ '.git',
-            \ '.svn',
-            \ 'project.*'
-            \ ]
-      let g:LanguageClient_useVirtualText = 0
-      let g:LanguageClient_diagnosticsDisplay = {
-            \   1: {
-            \     "name": "Error",
-            \     "texthl": "ALEError",
-            \     "signText": "x",
-            \     "signTexthl": "ALEErrorSign"
-            \   },
-            \   2: {
-            \     "name": "Warning",
-            \     "texthl": "ALEWarning",
-            \     "signText": "!",
-            \     "signTexthl": "ALEWarningSign"
-            \   },
-            \   3: {
-            \     "name": "Information",
-            \     "texthl": "ALEInfo",
-            \     "signText": ">",
-            \     "signTexthl": "ALEInfoSign"
-            \   },
-            \   4: {
-            \     "name": "Hint",
-            \     "texthl": "ALEInfo",
-            \     "signText": "*",
-            \     "signTexthl": "ALEInfoSign"
-            \   }
-            \ }
-
-      nnoremap <silent>gh :call LanguageClient#textDocument_hover()<CR>
-      nnoremap <silent>gd :call LanguageClient#textDocument_definition()<CR>
-      nnoremap <silent>gr :call LanguageClient#textDocument_references()<CR>
-  " }}}
-
-  " ncm2 {{{
-      let g:snips_no_mappings = 1
-      autocmd BufEnter * call ncm2#enable_for_buffer()
-      au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-      au User Ncm2PopupClose set completeopt=menuone
-
-      inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-      inoremap <expr> <Tab> pumvisible() ? "\<Down>" : "\<Tab>"
-      inoremap <expr> <S-Tab> pumvisible() ? "\<Up>" : "\<S-Tab>"
-      let g:UltiSnipsExpandTrigger="<c-cr>"
-      let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-      let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
-      let g:UltiSnipsRemoveSelectModeMappings = 0
-  " }}}
-
-  " echodoc {{{
-      let g:echodoc#enable_at_startup = 1
-      let g:echodoc#type = 'signature'
+  "   use tab and s-tab to navigate, use enter to complete
+      inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+      inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+      inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+      autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
   " }}}
 endif
 
