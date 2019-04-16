@@ -13,7 +13,7 @@
 需要`nvim 3.0`及以上版本，`nodejs`，`yarn`，`gcc 7.2`及以上版本并安装以下库：
 
 ```shell
-sudo apt install cmake libncurses-dev python3-pip python3-dev
+sudo apt install cmake libncurses-dev python3-pip python3-dev clang-format
 ```
 
 ### 安装
@@ -92,6 +92,9 @@ cd $NDSLVIM_BASE && proxychains ./install.sh
 alias vimp="vim --cmd \"let g:ignore_language_support=1\""
 ```
 
+安装过程中需要下载最新版本的`llvm`，在比较慢情况下，你可以参考`install.sh`中
+相关部分手动下载并解压放置到对应的位置。
+
 ### emmet
 
 Web开发中非常著名的编码辅助工具，其使用方式可以参见[emmet的官方文档](https://docs.emmet.io/)。
@@ -139,6 +142,10 @@ Vim的git-wrapper插件，可以在Vim中轻松地执行各种git命令。
 7. 使用`:Gread`来执行`git checkout --filename`
 
 使用`:help fugitive`来获取更多帮助
+
+### 自动格式化工具
+
+基于google的`vim-codefmt`
 
 ## 致谢
 

@@ -50,7 +50,9 @@ Plug 'vim-scripts/matchit.zip'
 " theme
 Plug 'kien/rainbow_parentheses.vim'         " for parentheses
 Plug 'lifepillar/vim-solarized8'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'tomasr/molokai'
+
 
 " git tools
 "
@@ -68,6 +70,11 @@ if LoadLanguageSupport()
   Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 endif " LoadLanguageSupport
 
+" google style code format
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+Plug 'google/vim-glaive'
+
 " ==================== plugin definition end ========================
 call plug#end()
 
@@ -80,7 +87,6 @@ call plug#end()
         let g:airline_symbols = {}
     endif
 
-    let g:airline_theme='luna'
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#show_buffers = 0
 
@@ -237,6 +243,22 @@ if LoadLanguageSupport()
       autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
   " }}}
 endif
+
+" code format
+" {{{
+    call glaive#Install()
+    augroup autoformat_settings
+      autocmd FileType bzl AutoFormatBuffer buildifier
+      autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+      autocmd FileType dart AutoFormatBuffer dartfmt
+      autocmd FileType go AutoFormatBuffer gofmt
+      autocmd FileType gn AutoFormatBuffer gn
+      autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
+      autocmd FileType java AutoFormatBuffer google-java-format
+      autocmd FileType python AutoFormatBuffer yapf
+      " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+    augroup END
+" }}}
 
 " ==================== configuration end ============================
 

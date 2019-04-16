@@ -146,6 +146,7 @@ endif
 " theme
 set background=dark
 set termguicolors
+let g:airline_theme='solarized'
 colorscheme solarized8
 
 " set mark column color
