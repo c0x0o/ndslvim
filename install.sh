@@ -52,7 +52,7 @@ fi
 if [ ! -e $LANG_SERVER_BASE/$LLVM_NAME.tar.xz ]; then
   cd $LANG_SERVER_BASE
   curl -OL "http://releases.llvm.org/${LLVM_VER}/${LLVM_NAME}.tar.xz"
-  tar -xf ${LLVM_NAME}
+  tar -xf ${LLVM_NAME}.tar.xz
   cd $VIMBASE
 else
   echo "llvm already downloaded"
